@@ -1,0 +1,118 @@
+.home-container {
+  min-height: 100vh;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.home-content {
+  background: white;
+  border-radius: 15px;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+  padding: 40px;
+  width: 100%;
+  max-width: 600px;
+  margin: 20px auto;
+}
+
+.logo-space {
+  text-align: center;
+  margin-bottom: 20px;
+  min-height: 80px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.logo-space img {
+  max-width: 120px;
+  max-height: 80px;
+  object-fit: contain;
+}
+
+.home-container h1 {
+  text-align: center;
+  color: #2563eb;
+  margin-bottom: 30px;
+  font-size: 2.5em;
+}
+
+.home-form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.home-form input,
+.home-form select {
+  padding: 15px;
+  font-size: 16px;
+  border: 2px solid #e2e8f0;
+  border-radius: 8px;
+  width: 100%;
+  box-sizing: border-box;
+  transition: all 0.3s ease;
+  background-color: white;
+}
+
+.home-form input:focus,
+.home-form select:focus {
+  outline: none;
+  border-color: #2563eb;
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+}
+
+.button-container {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+.button-container button {
+  padding: 15px 30px;
+  font-size: 18px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-weight: 600;
+  background: #2563eb;
+  color: white;
+  min-width: 200px;
+}
+
+.button-container button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 16px rgba(37, 99, 235, 0.3);
+  background: #1d4ed8;
+}
+
+.button-container button:active {
+  transform: translateY(1px);
+}
+
+/* Responsive design for mobile */
+@media (max-width: 768px) {
+  .home-container {
+    padding: 10px;
+  }
+  
+  .home-content {
+    padding: 20px;
+    margin: 10px;
+  }
+  
+  .home-container h1 {
+    font-size: 2em;
+  }
+  
+  .button-container {
+    flex-direction: column;
+  }
+  
+  .button-container button {
+    width: 100%;
+  }
+}
