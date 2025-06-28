@@ -64,13 +64,6 @@ function Survey() {
     return values.every(val => val > 0) ? (sum / values.length).toFixed(1) : 0;
   };
 
-  const getLevelRecommendation = (average) => {
-    // MCER levels with maximum of B1
-    if (average >= 4.0) return 'B1';
-    if (average >= 2.5) return 'A2';
-    return 'A1';
-  };
-
   const submitSurvey = async () => {
     const average = calculateAverage();
     if (average === 0) {
@@ -120,7 +113,6 @@ function Survey() {
       const surveyData = {
         answers: surveyAnswers,
         average: parseFloat(average),
-        recommendation: getLevelRecommendation(average),
         studentInfo: studentInfo,
         examResults: examResults
       };
@@ -176,12 +168,7 @@ function Survey() {
 
           <div className="survey-summary">
             <div className="average-score">
-              <h3>Average Score: {calculateAverage()}/5</h3>
-              {calculateAverage() > 0 && (
-                <p className="recommendation">
-                  Recommended Level: <strong>{getLevelRecommendation(calculateAverage())}</strong>
-                </p>
-              )}
+              <h3>Average Score: {calculateAverage()}/5.0</h3>
             </div>
             
             <div className="survey-buttons">
