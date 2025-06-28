@@ -127,6 +127,17 @@ function Exam() {
       const teacherGrammarScore = surveyResults.answers?.grammar || 0;
       const grammarPercentage = teacherGrammarScore > 0 ? parseFloat(((teacherGrammarScore / 5) * 100).toFixed(2)) : 0;
       
+      // Calculate final percentages for level determination
+      const finalPercentages = {
+        listeningPercentage: listeningPercentage,
+        writingPercentage: 0,
+        grammarPercentage: grammarPercentage,
+        readingPercentage: 0,
+        speakingPercentage: surveyResults.average ? parseFloat(((surveyResults.average / 5) * 100).toFixed(2)) : 0
+      };
+      
+      const reachedLevel = calculateReachedLevel(finalPercentages);
+      
       // Submit with zero scores for exam-based skills, but keep survey-based scores
       const studentData = {
         ...studentInfo,
@@ -135,7 +146,7 @@ function Exam() {
         grammarPercentage: grammarPercentage,
         readingPercentage: 0,
         speakingPercentage: surveyResults.average ? parseFloat(((surveyResults.average / 5) * 100).toFixed(2)) : 0,
-        reachedLevel: 'Disqualified',
+        reachedLevel: reachedLevel,
         surveyResults: surveyResults.answers || {},
         examResults: { 
           answers: [], 
@@ -169,7 +180,7 @@ function Exam() {
                 readingPercentage: 0 
               } 
             },
-            reachedLevel: 'Disqualified',
+            reachedLevel: reachedLevel,
             disqualified: true
           }
         } 

@@ -234,10 +234,8 @@ export const calculateReachedLevel = (percentages) => {
     percentages.readingPercentage
   ) / 5;
 
-  if (avgPercentage >= 90) return 'Advanced';
-  if (avgPercentage >= 80) return 'Upper Intermediate';
-  if (avgPercentage >= 70) return 'Intermediate';
-  if (avgPercentage >= 60) return 'Pre-Intermediate';
-  if (avgPercentage >= 50) return 'Elementary';
-  return 'Beginner';
+  // MCER levels with maximum of B1
+  if (avgPercentage >= 80) return 'B1';
+  if (avgPercentage >= 60) return 'A2';
+  return 'A1';
 }; 

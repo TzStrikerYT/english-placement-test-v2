@@ -65,11 +65,10 @@ function Survey() {
   };
 
   const getLevelRecommendation = (average) => {
-    if (average >= 4.5) return 'Advanced';
-    if (average >= 3.5) return 'Upper Intermediate';
-    if (average >= 2.5) return 'Intermediate';
-    if (average >= 1.5) return 'Pre-Intermediate';
-    return 'Beginner';
+    // MCER levels with maximum of B1
+    if (average >= 4.0) return 'B1';
+    if (average >= 2.5) return 'A2';
+    return 'A1';
   };
 
   const submitSurvey = async () => {
@@ -98,7 +97,7 @@ function Survey() {
       const listeningPercentage = comprehensionScore > 0 ? parseFloat(((comprehensionScore / 5) * 100).toFixed(2)) : 0;
       console.log('Calculated listening percentage from comprehension:', listeningPercentage);
       
-      // Prepare student data for Firebase
+      // Prepare student data for Firebase - only save survey data, level will be calculated in Exam
       const studentData = {
         ...studentInfo,
         speakingPercentage: speakingPercentage,
@@ -106,7 +105,7 @@ function Survey() {
         writingPercentage: examResults.writingPercentage || 0,
         grammarPercentage: examResults.grammarPercentage || 0,
         readingPercentage: examResults.readingPercentage || 0,
-        reachedLevel: getLevelRecommendation(average),
+        reachedLevel: 'Pending', // Will be calculated in Exam component
         surveyResults: surveyAnswers,
         examResults: examResults
       };
@@ -128,7 +127,7 @@ function Survey() {
 
       console.log('Survey Results:', surveyData);
       
-      alert(`Conversational evaluation completed! Average score: ${average}/5\nRecommended level: ${getLevelRecommendation(average)}\nData saved to database.\n\nNow proceeding to the written exam.`);
+      alert(`Conversational evaluation completed! Average score: ${average}/5\nData saved to database.\n\nNow proceeding to the written exam.`);
       
       // Navigate to exam with student info and survey results
       navigate('/exam', { 
