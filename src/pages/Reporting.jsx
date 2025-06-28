@@ -82,199 +82,264 @@ function Reporting() {
     }
 
     const certificateHTML = `
-      <div class="certificate-container">
-        <div class="certificate-header">
-          <h1>Certificado de evaluación de nivel de inglés</h1>
-          <div class="logo">Bilingues</div>
-        </div>
-        
-        <div class="certificate-body">
-          <div class="certificate-content">
-            <p class="certificate-text">
-              El siguiente documento certifica que <strong>${student.studentName}</strong>, con el documento de identificación ${student.documentType} ${student.documentNumber}, expedido en ${student.placeOfExpedition}, ha completado el examen de nivel de inglés y ha obtenido los siguientes resultados:
-            </p>
-            
-            <div class="results-grid">
-              <div class="result-item">
-                <span class="skill">Listening:</span>
-                <span class="percentage">${student.listeningPercentage}%</span>
+      <!DOCTYPE html>
+      <html lang="es">
+      <head>
+          <meta charset="UTF-8">
+          <meta name="viewport" content="width=device-width, initial-scale=1.0">
+          <title>Certificado Bilingües</title>
+          <style>
+              body {
+                  font-family: 'Calibri', 'Arial', sans-serif;
+                  margin: 0;
+                  padding: 20px;
+                  background: white;
+                  font-size: 12px;
+                  line-height: 1.2;
+              }
+              
+              .certificate-container {
+                  max-width: 8.5in;
+                  margin: 0 auto;
+                  padding: 20px;
+                  background: white;
+              }
+              
+              .header {
+                  text-align: center;
+                  margin-bottom: 20px;
+              }
+              
+              .logo-section {
+                  text-align: center;
+                  margin-bottom: 15px;
+                  display: flex;
+                  justify-content: center;
+                  align-items: center;
+              }
+              
+              .logo-image {
+                  max-width: 350px;
+                  height: auto;
+                  display: block;
+              }
+              
+              .accreditation {
+                  font-size: 10px;
+                  text-align: justify;
+                  margin: 10px 0;
+                  line-height: 1.3;
+              }
+              
+              .certifica-title {
+                  text-align: center;
+                  font-size: 20px;
+                  font-weight: bold;
+                  margin: 15px 0;
+                  letter-spacing: 2px;
+              }
+              
+              .student-info {
+                  text-align: justify;
+                  margin: 10px 0;
+                  font-size: 12px;
+                  line-height: 1.4;
+              }
+              
+              .results-table {
+                  margin: 15px auto;
+                  border-collapse: collapse;
+                  width: 300px;
+              }
+              
+              .results-table td {
+                  border: 1px solid #000;
+                  padding: 6px;
+                  text-align: center;
+                  font-size: 11px;
+              }
+              
+              .skill-header {
+                  background-color: #e6f3ff;
+                  font-weight: bold;
+              }
+              
+              .level-statement {
+                  text-align: center;
+                  margin: 15px 0;
+                  font-size: 12px;
+              }
+              
+              .competency-descriptions {
+                  margin: 15px 0;
+                  text-align: justify;
+              }
+              
+              .competency-section {
+                  margin-bottom: 8px;
+                  font-size: 10px;
+                  line-height: 1.3;
+              }
+              
+              .date-location {
+                  text-align: center;
+                  margin: 20px 0;
+                  font-size: 12px;
+              }
+              
+              .signature-section {
+                  text-align: center;
+                  margin: 20px 0;
+              }
+              
+              .signature-image {
+                  max-width: 150px;
+                  height: auto;
+                  margin: 5px auto;
+                  display: block;
+              }
+              
+              .coordinator-name {
+                  font-weight: bold;
+                  margin: 5px 0;
+                  font-size: 12px;
+              }
+              
+              .coordinator-title {
+                  font-size: 11px;
+                  margin: 2px 0;
+              }
+              
+              .contact-info {
+                  border-top: 1px solid #000;
+                  padding-top: 15px;
+                  text-align: center;
+                  margin-top: 20px;
+                  font-size: 10px;
+              }
+              
+              .contact-info p {
+                  margin: 3px 0;
+              }
+              
+              .email-link {
+                  color: #0066cc;
+                  text-decoration: underline;
+              }
+          </style>
+      </head>
+      <body>
+          <div class="certificate-container">
+              <div class="header">
+                  <div class="logo-section">
+                      <img src="Resources/logo_con_letras.jpeg" alt="Logo Bilingües Centro Colombiano de Lenguas Modernas" class="logo-image">
+                  </div>
+                  
+                  <div class="accreditation">
+                      El Coordinador Académico del Centro Colombiano de Lenguas Modernas Bilingües entidad privada con resolución oficial, 
+                      expedida por la Secretaría de Educación de Bogotá No: 06-091 del 2024 y 06-023 del 2021, con NIT 900260014-0 por la cual 
+                      se reconoce la prestación del servicio educativo formal laboral para el Trabajo y Desarrollo Humano:
+                  </div>
               </div>
-              <div class="result-item">
-                <span class="skill">Speaking:</span>
-                <span class="percentage">${student.speakingPercentage}%</span>
+              
+              <div class="certifica-title">CERTIFICA</div>
+              
+              <div class="student-info">
+                  Que el (la) estudiante(a) <strong>${student.studentName}</strong> con P.P.T. <strong>${student.documentNumber}</strong> de ${student.placeOfExpedition || student.city}, obtuvo en 
+                  su <strong>EXAMEN DE CLASIFICACIÓN DE NIVEL DE INGLÉS</strong> las siguientes puntuaciones de suficiencia:
               </div>
-              <div class="result-item">
-                <span class="skill">Writing:</span>
-                <span class="percentage">${student.writingPercentage}%</span>
+              
+              <table class="results-table">
+                  <tr>
+                      <td class="skill-header">LISTENING</td>
+                      <td>${student.listeningPercentage}% - 100%</td>
+                  </tr>
+                  <tr>
+                      <td class="skill-header">SPEAKING</td>
+                      <td>${student.speakingPercentage}% - 100%</td>
+                  </tr>
+                  <tr>
+                      <td class="skill-header">READING</td>
+                      <td>${student.readingPercentage || 'N/A'}% - 100%</td>
+                  </tr>
+                  <tr>
+                      <td class="skill-header">WRITING</td>
+                      <td>${student.writingPercentage}% - 100%</td>
+                  </tr>
+                  <tr>
+                      <td class="skill-header">GRAMMAR</td>
+                      <td>${student.grammarPercentage}% - 100%</td>
+                  </tr>
+              </table>
+              
+              <div class="level-statement">
+                  Según esta puntuación el estudiante alcanza el nivel requerido de <strong>INGLÉS ${student.reachedLevel}</strong><br>
+                  según el Marco Común Europeo (MCER):
               </div>
-              <div class="result-item">
-                <span class="skill">Grammar:</span>
-                <span class="percentage">${student.grammarPercentage}%</span>
+              
+              <div class="competency-descriptions">
+                  <div class="competency-section">
+                      <strong>LISTENING:</strong> El estudiante demuestra un nivel ${student.reachedLevel} sólido en la habilidad de escuchar, lo que le alcanzando una competencia del ${student.listeningPercentage}% en esta área. Su capacidad para 
+                      comprender el inglés hablado le permite seguir conversaciones y obtener información general de audios y videos con un nivel de complejidad. Es capaz de seguir la idea 
+                      principal y algunos detalles específicos de diálogos y mensajes cortos, incluso cuando se presenta en un contexto conocido y con vocabulario familiar.
+                  </div>
+                  
+                  <div class="competency-section">
+                      <strong>SPEAKING:</strong> El estudiante alcanza un nivel ${student.reachedLevel} sólido en esta área. Puede comunicarse de manera efectiva en situaciones 
+                      comunicativas del ${student.speakingPercentage}% en esta área. Puede intercambiar información de manera efectiva sobre temas familiares, aunque su fluidez y precisión requieren mejoras. Es capaz de expresar opiniones, hacer preguntas y mantener conversaciones complejas sobre temas 
+                      familiares, aunque su fluidez y precisión requieren mejoras. Es competente para participar en diálogos simples y responder a preguntas básicas sobre su entorno inmediato.
+                  </div>
+                  
+                  <div class="competency-section">
+                      <strong>READING:</strong> El estudiante alcanza un nivel ${student.reachedLevel} sólido en la habilidad de lectura, con un porcentaje del ${student.readingPercentage || 'N/A'}%. Esto significa que puede leer y comprender textos extensos y 
+                      complejos sobre temas conocidos. Es capaz de identificar información principal y algunos detalles relevantes en artículos, instrucciones y mensajes escritos, así como entender 
+                      el sentido general de textos más largos. Su habilidad le permite seguir argumentos en textos bien estructurados y seguir la línea argumental de textos descriptivos, aunque requiere apoyo 
+                      para su nivel.
+                  </div>
+                  
+                  <div class="competency-section">
+                      <strong>WRITING:</strong> El estudiante presenta un nivel ${student.reachedLevel} sólido en esta área. Puede producir textos claros y simples sobre temas familiares, como 
+                      descripciones de sí mismo o de su entorno, y mensajes informales. Aunque su escritura puede contener errores gramaticales y ortográficos, es capaz de organizar sus ideas 
+                      de manera coherente y utilizar frases y vocabulario complejos para comunicarse. Esta competencia le permite expresar sus pensamientos y puntos de vista de manera cotidiana.
+                  </div>
+                  
+                  <div class="competency-section">
+                      <strong>GRAMMAR:</strong> El estudiante muestra un nivel ${student.reachedLevel} sólido en la gramática, con un porcentaje del ${student.grammarPercentage}%. Su comprensión de las estructuras gramaticales complejas le permite utilizar 
+                      tiempos verbales compuestos, formar oraciones complejas y aplicar reglas fundamentales del idioma. Aunque todavía puede tener algunas dificultades con estructuras más 
+                      complejas y errores gramaticales ocasionales, su conocimiento y aplicación de la gramática son suficientes para comunicarse con claridad y comprensión en situaciones 
+                      cotidianas.
+                  </div>
               </div>
-            </div>
-            
-            <div class="level-result">
-              <p>Segun esta puntuación el estudiante alcanza el nivel requerido de: <span class="level">${student.reachedLevel}</span> Según el Marco Común Europeo (MCER)</p>
-            </div>
+              
+              <div class="date-location">
+                  Dada en Bogotá D.C a los ${new Date().getDate().toString().padStart(2, '0')} días del mes de ${new Date().toLocaleDateString('es-ES', { month: 'long' })} de ${new Date().getFullYear()} a solicitud del(la) interesado(a).
+              </div>
+              
+              <div class="signature-section">
+                  <img src="Resources/firma_cesar.jpeg" alt="Firma César Rodríguez" class="signature-image">
+                  <div class="coordinator-name">CÉSAR RODRÍGUEZ RODRÍGUEZ.</div>
+                  <div class="coordinator-title">COORDINADOR ACADÉMICO</div>
+                  <div class="coordinator-title">CONVENIO BILINGÜES – INNOVAR</div>
+              </div>
+              
+              <div class="contact-info">
+                  <p><strong>Dirección:</strong> Diagonal 47ª Nº 53 46 sur – Barrio Venecia Bogotá D.C.</p>
+                  <p><strong>Tel:</strong> 318 372 51 83 <strong>Web:</strong> www.bilingues.edu.co</p>
+                  <p><strong>E-mail:</strong> <span class="email-link">coordinacion@bilingues.edu.co</span> <strong>Facebook:</strong> Programas Técnicos Bilingües</p>
+              </div>
           </div>
-          
-          <div class="certificate-footer">
-            <p class="date">Fecha de emisión: ${new Date(student.updatedAt?.toDate() || student.updatedAt || Date.now()).toLocaleDateString()}</p>
-            <p class="signature">Bilingues Centro de lenguas</p>
-          </div>
-        </div>
-      </div>
+      </body>
+      </html>
     `;
 
     const element = document.createElement('div');
     element.innerHTML = certificateHTML;
-    element.className = 'certificate-wrapper';
-    
-    // Add certificate styles
-    const style = document.createElement('style');
-    style.textContent = `
-      .certificate-wrapper {
-        font-family: 'Times New Roman', serif;
-        width: 8.5in;
-        height: 11in;
-        margin: 0 auto;
-        padding: 0.25in;
-        background: white;
-        border: 3px solid #gold;
-        box-shadow: 0 0 20px rgba(0,0,0,0.1);
-        box-sizing: border-box;
-        overflow: hidden;
-      }
-      .certificate-container {
-        text-align: center;
-        height: 100%;
-        display: flex;
-        flex-direction: column;
-        justify-content: flex-start;
-      }
-      .certificate-header {
-        border-bottom: 2px solid #gold;
-        padding-bottom: 10px;
-        margin-bottom: 15px;
-        flex-shrink: 0;
-      }
-      .certificate-header h1 {
-        color: #2c3e50;
-        font-size: 18px;
-        margin: 0;
-        text-transform: uppercase;
-        letter-spacing: 0.5px;
-        line-height: 1.1;
-        word-wrap: break-word;
-      }
-      .logo {
-        font-size: 16px;
-        font-weight: bold;
-        color: #e74c3c;
-        margin-top: 5px;
-      }
-      .certificate-body {
-        flex: 1;
-        display: flex;
-        flex-direction: column;
-        justify-content: flex-start;
-        min-height: 0;
-      }
-      .certificate-content {
-        flex: 1;
-        display: flex;
-        flex-direction: column;
-        justify-content: flex-start;
-        min-height: 0;
-        margin-top: 10px;
-      }
-      .certificate-text {
-        font-size: 13px;
-        line-height: 1.3;
-        margin-bottom: 15px;
-        text-align: justify;
-        flex-shrink: 0;
-        word-wrap: break-word;
-        hyphens: auto;
-      }
-      .results-grid {
-        display: grid;
-        grid-template-columns: 1fr 1fr;
-        gap: 10px;
-        margin: 15px 0;
-        max-width: 300px;
-        margin-left: auto;
-        margin-right: auto;
-        flex-shrink: 0;
-      }
-      .result-item {
-        display: flex;
-        justify-content: space-between;
-        padding: 6px;
-        border: 1px solid #ddd;
-        border-radius: 4px;
-        font-size: 12px;
-      }
-      .skill {
-        font-weight: bold;
-        color: #2c3e50;
-      }
-      .percentage {
-        color: #e74c3c;
-        font-weight: bold;
-      }
-      .level-result {
-        margin: 15px 0;
-        padding: 10px;
-        background: #f8f9fa;
-        border-radius: 6px;
-        flex-shrink: 0;
-      }
-      .level-result h3 {
-        margin: 0;
-        color: #2c3e50;
-        font-size: 14px;
-      }
-      .level {
-        color: #e74c3c;
-        font-size: 16px;
-      }
-      .certificate-footer {
-        margin-top: auto;
-        border-top: 2px solid #gold;
-        padding-top: 10px;
-        flex-shrink: 0;
-      }
-      .date {
-        font-style: italic;
-        color: #666;
-        font-size: 11px;
-        margin: 3px 0;
-      }
-      .signature {
-        font-weight: bold;
-        color: #2c3e50;
-        margin-top: 5px;
-        font-size: 13px;
-      }
-      @media print {
-        .certificate-wrapper {
-          width: 8.5in;
-          height: 11in;
-          margin: 0;
-          padding: 0.25in;
-          border: none;
-          box-shadow: none;
-        }
-      }
-    `;
-    element.appendChild(style);
 
     const opt = {
-      margin: 1,
-      filename: `certificate_${student.studentName.replace(/\s+/g, '_')}.pdf`,
+      margin: 0.2,
+      filename: `Certificado_${student.studentName.replace(/\s+/g, '_')}.pdf`,
       image: { type: 'jpeg', quality: 0.98 },
-      html2canvas: { scale: 2 },
+      html2canvas: { scale: 2, useCORS: true },
       jsPDF: { unit: 'in', format: 'a4', orientation: 'portrait' }
     };
 
