@@ -247,6 +247,7 @@ function Reporting() {
               <div class="student-info">
                   Que el (la) estudiante(a) <strong>${student.studentName}</strong> con P.P.T. <strong>${student.documentNumber}</strong> de ${student.placeOfExpedition || student.city}, obtuvo en 
                   su <strong>EXAMEN DE CLASIFICACIÓN DE NIVEL DE INGLÉS</strong> las siguientes puntuaciones de suficiencia:
+                  ${student.disqualified ? '<br><br><strong style="color: #c62828;">⚠️ ESTUDIANTE DESCALIFICADO: ' + (student.disqualificationReason || 'Violación del examen') + '</strong>' : ''}
               </div>
               
               <table class="results-table">
@@ -400,6 +401,11 @@ function Reporting() {
                       <h4>{student.studentName}</h4>
                       <p>Document: {student.documentType} - {student.documentNumber}</p>
                       <p>Level: {student.reachedLevel}</p>
+                      {student.disqualified && (
+                        <p className="disqualified-warning">
+                          ⚠️ DISQUALIFIED: {student.disqualificationReason || 'Exam violation'}
+                        </p>
+                      )}
                       <div className="scores">
                         <span>L: {student.listeningPercentage}%</span>
                         <span>S: {student.speakingPercentage}%</span>
@@ -422,6 +428,11 @@ function Reporting() {
                     <h4>{searchResults.studentName}</h4>
                     <p>Document: {searchResults.documentType} - {searchResults.documentNumber}</p>
                     <p>Level: {searchResults.reachedLevel}</p>
+                    {searchResults.disqualified && (
+                      <p className="disqualified-warning">
+                        ⚠️ DISQUALIFIED: {searchResults.disqualificationReason || 'Exam violation'}
+                      </p>
+                    )}
                     <div className="scores">
                       <span>L: {searchResults.listeningPercentage}%</span>
                       <span>S: {searchResults.speakingPercentage}%</span>
@@ -448,6 +459,11 @@ function Reporting() {
                 <p><strong>Document:</strong> {selectedStudent.documentType} - {selectedStudent.documentNumber}</p>
                 <p><strong>City:</strong> {selectedStudent.city}</p>
                 <p><strong>Level:</strong> {selectedStudent.reachedLevel}</p>
+                {selectedStudent.disqualified && (
+                  <p className="disqualified-warning">
+                    ⚠️ DISQUALIFIED: {selectedStudent.disqualificationReason || 'Exam violation'}
+                  </p>
+                )}
                 <div className="detailed-scores">
                   <h4>Assessment Scores:</h4>
                   <div className="score-grid">
@@ -493,6 +509,11 @@ function Reporting() {
                   <h4>{student.studentName}</h4>
                   <p>Document: {student.documentType} - {student.documentNumber}</p>
                   <p>Level: {student.reachedLevel}</p>
+                  {student.disqualified && (
+                    <p className="disqualified-warning">
+                      ⚠️ DISQUALIFIED: {student.disqualificationReason || 'Exam violation'}
+                    </p>
+                  )}
                   <div className="scores">
                     <span>L: {student.listeningPercentage}%</span>
                     <span>S: {student.speakingPercentage}%</span>
