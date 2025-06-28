@@ -13,8 +13,96 @@ function Exam() {
   const [isExamDisqualified, setIsExamDisqualified] = useState(false);
 
   const questions = [
-    { id: 1, question: 'What is your name?', options: ['Option 1', 'Option 2'], correct: 0 },
-    { id: 2, question: 'What is your age?', options: ['Option 1', 'Option 2'], correct: 1 },
+    {
+      "id": 1,
+      "question": "¿Cuál es la forma correcta del verbo to be?",
+      "options": ["He are happy.", "She is a student.", "I is tired.", "They am ready."],
+      "correct": 1
+    },
+    {
+      "id": 2,
+      "question": "¿Cuál es el plural de child?",
+      "options": ["Childs", "Childes", "Children", "Child’s"],
+      "correct": 2
+    },
+    {
+      "id": 3,
+      "question": "¿Cuál es un sustantivo no contable?",
+      "options": ["Apples", "Sugar", "Chairs", "Books"],
+      "correct": 1
+    },
+    {
+      "id": 4,
+      "question": "Elige la oración correcta:",
+      "options": ["There is two dogs in the park.", "There are a cat on the sofa.", "There are many students in the class.", "There is three pencils on the table."],
+      "correct": 2
+    },
+    {
+      "id": 5,
+      "question": "¿Cuál opción es correcta para algo cercano y singular?",
+      "options": ["This", "That", "These", "Those"],
+      "correct": 0
+    },
+    {
+      "id": 6,
+      "question": "¿Cuál verbo modal usamos para expresar habilidad?",
+      "options": ["Must", "Can", "Should", "Might"],
+      "correct": 1
+    },
+    {
+      "id": 7,
+      "question": "Elige la oración correcta con comparativo:",
+      "options": ["My car is fast than yours.", "My house is bigger than his house.", "This book is the more interesting.", "She is most tall than me."],
+      "correct": 1
+    },
+    {
+      "id": 8,
+      "question": "Elige la oración correcta con superlativo:",
+      "options": ["She is the tallest girl in the class.", "He is most fast.", "This is the more good movie.", "My cat is the baddest."],
+      "correct": 0
+    },
+    {
+      "id": 9,
+      "question": "Elige el plural correcto:",
+      "options": ["Boxs", "Boxies", "Boxes", "Box"],
+      "correct": 2
+    },
+    {
+      "id": 10,
+      "question": "¿Cuál oración es correcta?",
+      "options": ["There are some milk.", "There is a milk.", "There is some milk.", "There are two milk."],
+      "correct": 2
+    },
+    {
+      "id": 11,
+      "question": "¿Cuál opción es correcta?",
+      "options": ["Those chair is new.", "This pens are red.", "These apples are fresh.", "That books are old."],
+      "correct": 2
+    },
+    {
+      "id": 12,
+      "question": "¿Qué preposición indica movimiento hacia adentro?",
+      "options": ["Into", "On", "Under", "Behind"],
+      "correct": 0
+    },
+    {
+      "id": 13,
+      "question": "¿Cuál Wh- question se usa para preguntar por el lugar?",
+      "options": ["What", "Where", "When", "Who"],
+      "correct": 1
+    },
+    {
+      "id": 14,
+      "question": "Elige la opción correcta con there are:",
+      "options": ["There are an apple.", "There are many cars.", "There are a dog.", "There are sugar."],
+      "correct": 1
+    },
+    {
+      "id": 15,
+      "question": "¿Cuál oración usa should correctamente?",
+      "options": ["You should to study.", "You should studies.", "You should study.", "You should studying."],
+      "correct": 2
+    }
   ];
 
   // Prevent right-click
