@@ -114,7 +114,7 @@ function Reporting() {
             </div>
             
             <div class="level-result">
-              <h3>Nivel recomendado: <span class="level">${student.reachedLevel}</span></h3>
+              <p>Segun esta puntuación el estudiante alcanza el nivel requerido de: <span class="level">${student.reachedLevel}</span> Según el Marco Común Europeo (MCER)</p>
             </div>
           </div>
           
