@@ -8,7 +8,7 @@ function Exam() {
   const navigate = useNavigate();
   const [currentQuestion, setCurrentQuestion] = useState(0);
   const [answers, setAnswers] = useState([]);
-  const [timer, setTimer] = useState(600); // 10 minutes
+  const [timer, setTimer] = useState(2700); // 45 minutes
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isExamDisqualified, setIsExamDisqualified] = useState(false);
 
