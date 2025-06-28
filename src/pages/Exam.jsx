@@ -12,98 +12,51 @@ function Exam() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isExamDisqualified, setIsExamDisqualified] = useState(false);
 
-  const questions = [
-    {
-      "id": 1,
-      "question": "¿Cuál es la forma correcta del verbo to be?",
-      "options": ["He are happy.", "She is a student.", "I is tired.", "They am ready."],
-      "correct": 1
-    },
-    {
-      "id": 2,
-      "question": "¿Cuál es el plural de child?",
-      "options": ["Childs", "Childes", "Children", "Child’s"],
-      "correct": 2
-    },
-    {
-      "id": 3,
-      "question": "¿Cuál es un sustantivo no contable?",
-      "options": ["Apples", "Sugar", "Chairs", "Books"],
-      "correct": 1
-    },
-    {
-      "id": 4,
-      "question": "Elige la oración correcta:",
-      "options": ["There is two dogs in the park.", "There are a cat on the sofa.", "There are many students in the class.", "There is three pencils on the table."],
-      "correct": 2
-    },
-    {
-      "id": 5,
-      "question": "¿Cuál opción es correcta para algo cercano y singular?",
-      "options": ["This", "That", "These", "Those"],
-      "correct": 0
-    },
-    {
-      "id": 6,
-      "question": "¿Cuál verbo modal usamos para expresar habilidad?",
-      "options": ["Must", "Can", "Should", "Might"],
-      "correct": 1
-    },
-    {
-      "id": 7,
-      "question": "Elige la oración correcta con comparativo:",
-      "options": ["My car is fast than yours.", "My house is bigger than his house.", "This book is the more interesting.", "She is most tall than me."],
-      "correct": 1
-    },
-    {
-      "id": 8,
-      "question": "Elige la oración correcta con superlativo:",
-      "options": ["She is the tallest girl in the class.", "He is most fast.", "This is the more good movie.", "My cat is the baddest."],
-      "correct": 0
-    },
-    {
-      "id": 9,
-      "question": "Elige el plural correcto:",
-      "options": ["Boxs", "Boxies", "Boxes", "Box"],
-      "correct": 2
-    },
-    {
-      "id": 10,
-      "question": "¿Cuál oración es correcta?",
-      "options": ["There are some milk.", "There is a milk.", "There is some milk.", "There are two milk."],
-      "correct": 2
-    },
-    {
-      "id": 11,
-      "question": "¿Cuál opción es correcta?",
-      "options": ["Those chair is new.", "This pens are red.", "These apples are fresh.", "That books are old."],
-      "correct": 2
-    },
-    {
-      "id": 12,
-      "question": "¿Qué preposición indica movimiento hacia adentro?",
-      "options": ["Into", "On", "Under", "Behind"],
-      "correct": 0
-    },
-    {
-      "id": 13,
-      "question": "¿Cuál Wh- question se usa para preguntar por el lugar?",
-      "options": ["What", "Where", "When", "Who"],
-      "correct": 1
-    },
-    {
-      "id": 14,
-      "question": "Elige la opción correcta con there are:",
-      "options": ["There are an apple.", "There are many cars.", "There are a dog.", "There are sugar."],
-      "correct": 1
-    },
-    {
-      "id": 15,
-      "question": "¿Cuál oración usa should correctamente?",
-      "options": ["You should to study.", "You should studies.", "You should study.", "You should studying."],
-      "correct": 2
+  const questions = `
+  WwogICAgewogICAgICAiaWQiOiAxLAogICAgICAicXVlc3Rpb24iOiAiwr9DdcOhbCBlcyBsYSBmb3JtYSBjb3JyZWN0YSBkZWwgdmVyYm8gdG8gYmU/IiwKICAgICAgIm9wdGlvbnMiOiBbIkhlIGFyZSBoYXBweS4iLCAiU2hlIGlzIGEgc3R1ZGVudC4iLCAiSSBpcyB0aXJlZC4iLCAiVGhleSBhbSByZWFkeS4iXSwKICAgICAgImNvcnJlY3QiOiAxCiAgICB9LAogICAgewogICAgICAiaWQiOiAyLAogICAgICAicXVlc3Rpb24iOiAiwr9DdcOhbCBlcyBlbCBwbHVyYWwgZGUgY2hpbGQ/IiwKICAgICAgIm9wdGlvbnMiOiBbIkNoaWxkcyIsICJDaGlsZGVzIiwgIkNoaWxkcmVuIiwgIkNoaWxk4oCZcyJdLAogICAgICAiY29ycmVjdCI6IDIKICAgIH0sCiAgICB7CiAgICAgICJpZCI6IDMsCiAgICAgICJxdWVzdGlvbiI6ICLCv0N1w6FsIGVzIHVuIHN1c3RhbnRpdm8gbm8gY29udGFibGU/IiwKICAgICAgIm9wdGlvbnMiOiBbIkFwcGxlcyIsICJTdWdhciIsICJDaGFpcnMiLCAiQm9va3MiXSwKICAgICAgImNvcnJlY3QiOiAxCiAgICB9LAogICAgewogICAgICAiaWQiOiA0LAogICAgICAicXVlc3Rpb24iOiAiRWxpZ2UgbGEgb3JhY2nDs24gY29ycmVjdGE6IiwKICAgICAgIm9wdGlvbnMiOiBbIlRoZXJlIGlzIHR3byBkb2dzIGluIHRoZSBwYXJrLiIsICJUaGVyZSBhcmUgYSBjYXQgb24gdGhlIHNvZmEuIiwgIlRoZXJlIGFyZSBtYW55IHN0dWRlbnRzIGluIHRoZSBjbGFzcy4iLCAiVGhlcmUgaXMgdGhyZWUgcGVuY2lscyBvbiB0aGUgdGFibGUuIl0sCiAgICAgICJjb3JyZWN0IjogMgogICAgfSwKICAgIHsKICAgICAgImlkIjogNSwKICAgICAgInF1ZXN0aW9uIjogIsK/Q3XDoWwgb3BjacOzbiBlcyBjb3JyZWN0YSBwYXJhIGFsZ28gY2VyY2FubyB5IHNpbmd1bGFyPyIsCiAgICAgICJvcHRpb25zIjogWyJUaGlzIiwgIlRoYXQiLCAiVGhlc2UiLCAiVGhvc2UiXSwKICAgICAgImNvcnJlY3QiOiAwCiAgICB9LAogICAgewogICAgICAiaWQiOiA2LAogICAgICAicXVlc3Rpb24iOiAiwr9DdcOhbCB2ZXJibyBtb2RhbCB1c2Ftb3MgcGFyYSBleHByZXNhciBoYWJpbGlkYWQ/IiwKICAgICAgIm9wdGlvbnMiOiBbIk11c3QiLCAiQ2FuIiwgIlNob3VsZCIsICJNaWdodCJdLAogICAgICAiY29ycmVjdCI6IDEKICAgIH0sCiAgICB7CiAgICAgICJpZCI6IDcsCiAgICAgICJxdWVzdGlvbiI6ICJFbGlnZSBsYSBvcmFjacOzbiBjb3JyZWN0YSBjb24gY29tcGFyYXRpdm86IiwKICAgICAgIm9wdGlvbnMiOiBbIk15IGNhciBpcyBmYXN0IHRoYW4geW91cnMuIiwgIk15IGhvdXNlIGlzIGJpZ2dlciB0aGFuIGhpcyBob3VzZS4iLCAiVGhpcyBib29rIGlzIHRoZSBtb3JlIGludGVyZXN0aW5nLiIsICJTaGUgaXMgbW9zdCB0YWxsIHRoYW4gbWUuIl0sCiAgICAgICJjb3JyZWN0IjogMQogICAgfSwKICAgIHsKICAgICAgImlkIjogOCwKICAgICAgInF1ZXN0aW9uIjogIkVsaWdlIGxhIG9yYWNpw7NuIGNvcnJlY3RhIGNvbiBzdXBlcmxhdGl2bzoiLAogICAgICAib3B0aW9ucyI6IFsiU2hlIGlzIHRoZSB0YWxsZXN0IGdpcmwgaW4gdGhlIGNsYXNzLiIsICJIZSBpcyBtb3N0IGZhc3QuIiwgIlRoaXMgaXMgdGhlIG1vcmUgZ29vZCBtb3ZpZS4iLCAiTXkgY2F0IGlzIHRoZSBiYWRkZXN0LiJdLAogICAgICAiY29ycmVjdCI6IDAKICAgIH0sCiAgICB7CiAgICAgICJpZCI6IDksCiAgICAgICJxdWVzdGlvbiI6ICJFbGlnZSBlbCBwbHVyYWwgY29ycmVjdG86IiwKICAgICAgIm9wdGlvbnMiOiBbIkJveHMiLCAiQm94aWVzIiwgIkJveGVzIiwgIkJveCJdLAogICAgICAiY29ycmVjdCI6IDIKICAgIH0sCiAgICB7CiAgICAgICJpZCI6IDEwLAogICAgICAicXVlc3Rpb24iOiAiwr9DdcOhbCBvcmFjacOzbiBlcyBjb3JyZWN0YT8iLAogICAgICAib3B0aW9ucyI6IFsiVGhlcmUgYXJlIHNvbWUgbWlsay4iLCAiVGhlcmUgaXMgYSBtaWxrLiIsICJUaGVyZSBpcyBzb21lIG1pbGsuIiwgIlRoZXJlIGFyZSB0d28gbWlsay4iXSwKICAgICAgImNvcnJlY3QiOiAyCiAgICB9LAogICAgewogICAgICAiaWQiOiAxMSwKICAgICAgInF1ZXN0aW9uIjogIsK/Q3XDoWwgb3BjacOzbiBlcyBjb3JyZWN0YT8iLAogICAgICAib3B0aW9ucyI6IFsiVGhvc2UgY2hhaXIgaXMgbmV3LiIsICJUaGlzIHBlbnMgYXJlIHJlZC4iLCAiVGhlc2UgYXBwbGVzIGFyZSBmcmVzaC4iLCAiVGhhdCBib29rcyBhcmUgb2xkLiJdLAogICAgICAiY29ycmVjdCI6IDIKICAgIH0sCiAgICB7CiAgICAgICJpZCI6IDEyLAogICAgICAicXVlc3Rpb24iOiAiwr9RdcOpIHByZXBvc2ljacOzbiBpbmRpY2EgbW92aW1pZW50byBoYWNpYSBhZGVudHJvPyIsCiAgICAgICJvcHRpb25zIjogWyJJbnRvIiwgIk9uIiwgIlVuZGVyIiwgIkJlaGluZCJdLAogICAgICAiY29ycmVjdCI6IDAKICAgIH0sCiAgICB7CiAgICAgICJpZCI6IDEzLAogICAgICAicXVlc3Rpb24iOiAiwr9DdcOhbCBXaC0gcXVlc3Rpb24gc2UgdXNhIHBhcmEgcHJlZ3VudGFyIHBvciBlbCBsdWdhcj8iLAogICAgICAib3B0aW9ucyI6IFsiV2hhdCIsICJXaGVyZSIsICJXaGVuIiwgIldobyJdLAogICAgICAiY29ycmVjdCI6IDEKICAgIH0sCiAgICB7CiAgICAgICJpZCI6IDE0LAogICAgICAicXVlc3Rpb24iOiAiRWxpZ2UgbGEgb3BjacOzbiBjb3JyZWN0YSBjb24gdGhlcmUgYXJlOiIsCiAgICAgICJvcHRpb25zIjogWyJUaGVyZSBhcmUgYW4gYXBwbGUuIiwgIlRoZXJlIGFyZSBtYW55IGNhcnMuIiwgIlRoZXJlIGFyZSBhIGRvZy4iLCAiVGhlcmUgYXJlIHN1Z2FyLiJdLAogICAgICAiY29ycmVjdCI6IDEKICAgIH0sCiAgICB7CiAgICAgICJpZCI6IDE1LAogICAgICAicXVlc3Rpb24iOiAiwr9DdcOhbCBvcmFjacOzbiB1c2Egc2hvdWxkIGNvcnJlY3RhbWVudGU/IiwKICAgICAgIm9wdGlvbnMiOiBbIllvdSBzaG91bGQgdG8gc3R1ZHkuIiwgIllvdSBzaG91bGQgc3R1ZGllcy4iLCAiWW91IHNob3VsZCBzdHVkeS4iLCAiWW91IHNob3VsZCBzdHVkeWluZy4iXSwKICAgICAgImNvcnJlY3QiOiAyCiAgICB9CiAgXQ==
+  `;
+
+  // Function to decode base64 and parse questions
+  const decodeQuestions = (base64String) => {
+    try {
+      // Remove whitespace and newlines from the base64 string
+      const cleanBase64 = base64String.trim().replace(/\s+/g, '');
+      
+      // Method 1: Try the standard approach first
+      let decodedString;
+      try {
+        decodedString = decodeURIComponent(escape(atob(cleanBase64)));
+      } catch (utf8Error) {
+        // Method 2: If that fails, try direct atob and handle encoding manually
+        const binaryString = atob(cleanBase64);
+        const bytes = new Uint8Array(binaryString.length);
+        for (let i = 0; i < binaryString.length; i++) {
+          bytes[i] = binaryString.charCodeAt(i);
+        }
+        decodedString = new TextDecoder('utf-8').decode(bytes);
+      }
+      
+      // Parse the JSON string to get the questions array
+      const questionsArray = JSON.parse(decodedString);
+      
+      console.log('Decoded questions:', questionsArray);
+      return questionsArray;
+    } catch (error) {
+      console.error('Error decoding questions:', error);
+      // Return a fallback array if decoding fails
+      return [
+        { id: 1, question: 'Error loading questions', options: ['Error'], correct: 0 }
+      ];
     }
-  ];
+  };
+
+  // Decode the questions once when component mounts
+  const [decodedQuestions, setDecodedQuestions] = useState([]);
+
+  useEffect(() => {
+    const questionsArray = decodeQuestions(questions);
+    setDecodedQuestions(questionsArray);
+  }, []);
 
   // Prevent right-click
   useEffect(() => {
@@ -271,7 +224,7 @@ function Exam() {
   const nextQuestion = () => {
     if (isExamDisqualified) return;
     
-    if (currentQuestion < questions.length - 1) {
+    if (currentQuestion < decodedQuestions.length - 1) {
       setCurrentQuestion(currentQuestion + 1);
     } else {
       finishExam();
@@ -310,6 +263,22 @@ function Exam() {
     );
   }
 
+  // Show loading while questions are being decoded
+  if (decodedQuestions.length === 0) {
+    return (
+      <div className="exam-container">
+        <div className="exam-content">
+          <div className="exam-header">
+            <h1 className="exam-title">Loading Exam...</h1>
+          </div>
+          <div className="question-container">
+            <p className="question-text">Please wait while the exam questions are being loaded...</p>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="exam-container">
       <div className="exam-content">
@@ -321,9 +290,9 @@ function Exam() {
         </div>
         
         <div className="question-container">
-          <p className="question-text">{questions[currentQuestion].question}</p>
+          <p className="question-text">{decodedQuestions[currentQuestion].question}</p>
           <div className="options-container">
-            {questions[currentQuestion].options.map((option, index) => (
+            {decodedQuestions[currentQuestion].options.map((option, index) => (
               <button 
                 key={index} 
                 className={`option-button ${answers[currentQuestion] === index ? 'selected' : ''}`}
@@ -336,14 +305,14 @@ function Exam() {
           </div>
           <div className="navigation-buttons">
             <span className="question-counter">
-              Question {currentQuestion + 1} of {questions.length}
+              Question {currentQuestion + 1} of {decodedQuestions.length}
             </span>
             <button 
               className="next-button" 
               onClick={nextQuestion}
               disabled={isSubmitting}
             >
-              {isSubmitting ? 'Saving...' : (currentQuestion < questions.length - 1 ? 'Next' : 'Finish')}
+              {isSubmitting ? 'Saving...' : (currentQuestion < decodedQuestions.length - 1 ? 'Next' : 'Finish')}
             </button>
           </div>
         </div>
