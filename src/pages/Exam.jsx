@@ -88,13 +88,52 @@ function Exam() {
       if (document[hidden]) {
         // Student switched to another window/tab
         setIsExamDisqualified(true);
-        alert('You have been disqualified for switching to another window/tab. Your exam will be submitted with a score of 0.');
         finishExamWithZero();
       }
     };
 
+    // Detect window focus/blur (for window switching)
+    const handleWindowBlur = () => {
+      // Add a small delay to avoid false positives from legitimate interactions
+      setTimeout(() => {
+        if (document[hidden]) {
+          setIsExamDisqualified(true);
+          finishExamWithZero();
+        }
+      }, 100);
+    };
+
+    // Detect when window loses focus
+    const handleWindowFocus = () => {
+      // Check if the window was hidden when it regains focus
+      if (document[hidden]) {
+        setIsExamDisqualified(true);
+        finishExamWithZero();
+      }
+    };
+
+    // Detect keyboard shortcuts for window switching
+    const handleKeyDown = (e) => {
+      // Detectar Alt+Tab, Cmd+Tab, etc.
+      if ((e.altKey && e.key === 'Tab') || (e.metaKey && e.key === 'Tab')) {
+        setIsExamDisqualified(true);
+        finishExamWithZero();
+      }
+    };
+
+    // Add event listeners
     document.addEventListener(visibilityChange, handleVisibilityChange);
-    return () => document.removeEventListener(visibilityChange, handleVisibilityChange);
+    window.addEventListener('blur', handleWindowBlur);
+    window.addEventListener('focus', handleWindowFocus);
+    document.addEventListener('keydown', handleKeyDown);
+
+    // Cleanup event listeners
+    return () => {
+      document.removeEventListener(visibilityChange, handleVisibilityChange);
+      window.removeEventListener('blur', handleWindowBlur);
+      window.removeEventListener('focus', handleWindowFocus);
+      document.removeEventListener('keydown', handleKeyDown);
+    };
   }, []);
 
   // Timer effect
@@ -313,7 +352,6 @@ function Exam() {
               You have been disqualified for switching to another window/tab during the exam.
               Your exam will be submitted with a score of 0.
             </p>
-            <p>Redirecting to home page...</p>
           </div>
         </div>
       </div>
