@@ -403,6 +403,7 @@ function Reporting() {
                       <div className="scores">
                         <span>L: {student.listeningPercentage}%</span>
                         <span>S: {student.speakingPercentage}%</span>
+                        <span>R: {student.readingPercentage || 0}%</span>
                         <span>W: {student.writingPercentage}%</span>
                         <span>G: {student.grammarPercentage}%</span>
                       </div>
@@ -424,6 +425,7 @@ function Reporting() {
                     <div className="scores">
                       <span>L: {searchResults.listeningPercentage}%</span>
                       <span>S: {searchResults.speakingPercentage}%</span>
+                      <span>R: {searchResults.readingPercentage || 0}%</span>
                       <span>W: {searchResults.writingPercentage}%</span>
                       <span>G: {searchResults.grammarPercentage}%</span>
                     </div>
@@ -458,6 +460,10 @@ function Reporting() {
                       <span>{selectedStudent.speakingPercentage}%</span>
                     </div>
                     <div className="score-item">
+                      <span>Reading:</span>
+                      <span>{selectedStudent.readingPercentage || 0}%</span>
+                    </div>
+                    <div className="score-item">
                       <span>Writing:</span>
                       <span>{selectedStudent.writingPercentage}%</span>
                     </div>
@@ -490,6 +496,7 @@ function Reporting() {
                   <div className="scores">
                     <span>L: {student.listeningPercentage}%</span>
                     <span>S: {student.speakingPercentage}%</span>
+                    <span>R: {student.readingPercentage || 0}%</span>
                     <span>W: {student.writingPercentage}%</span>
                     <span>G: {student.grammarPercentage}%</span>
                   </div>

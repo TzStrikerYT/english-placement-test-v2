@@ -66,6 +66,7 @@ export const saveStudentData = async (studentData) => {
       writingPercentage: studentData.writingPercentage || 0,
       grammarPercentage: studentData.grammarPercentage || 0,
       speakingPercentage: studentData.speakingPercentage || 0,
+      readingPercentage: studentData.readingPercentage || 0,
       reachedLevel: studentData.reachedLevel || 'Not evaluated',
       createdAt: new Date(),
       updatedAt: new Date()
@@ -183,25 +184,43 @@ export const updateStudentData = async (documentType, documentId, updateData) =>
 export const calculatePercentages = (examResults) => {
   if (!examResults || !examResults.answers) {
     return {
-      listeningPercentage: 0,
       writingPercentage: 0,
-      grammarPercentage: 0,
-      speakingPercentage: 0
+      readingPercentage: 0
     };
   }
 
-  const totalQuestions = examResults.answers.length;
-  const correctAnswers = examResults.answers.filter(answer => answer !== null && answer !== undefined).length;
+  const answers = examResults.answers;
+  const questions = examResults.questions || [];
   
-  // For now, we'll use a simple calculation
-  // In a real scenario, you might have different question types
-  const percentage = totalQuestions > 0 ? (correctAnswers / totalQuestions) * 100 : 0;
+  if (questions.length === 0) {
+    console.warn('No questions provided for percentage calculation');
+    return {
+      writingPercentage: 0,
+      readingPercentage: 0
+    };
+  }
+
+  let correctAnswers = 0;
+  
+  // Check each answer against the correct answer
+  for (let i = 0; i < answers.length && i < questions.length; i++) {
+    const studentAnswer = answers[i];
+    const correctAnswer = questions[i].correct;
+    
+    // Check if the student's answer matches the correct answer
+    if (studentAnswer !== null && studentAnswer !== undefined && studentAnswer === correctAnswer) {
+      correctAnswers++;
+    }
+  }
+  
+  const totalQuestions = Math.min(answers.length, questions.length);
+  const percentage = totalQuestions > 0 ? parseFloat(((correctAnswers / totalQuestions) * 100).toFixed(2)) : 0;
+  
+  console.log(`Exam results: ${correctAnswers} correct out of ${totalQuestions} questions = ${percentage}%`);
   
   return {
-    listeningPercentage: percentage,
     writingPercentage: percentage,
-    grammarPercentage: percentage,
-    speakingPercentage: percentage
+    readingPercentage: percentage
   };
 };
 
@@ -211,8 +230,9 @@ export const calculateReachedLevel = (percentages) => {
     percentages.listeningPercentage + 
     percentages.writingPercentage + 
     percentages.grammarPercentage + 
-    percentages.speakingPercentage
-  ) / 4;
+    percentages.speakingPercentage +
+    percentages.readingPercentage
+  ) / 5;
 
   if (avgPercentage >= 90) return 'Advanced';
   if (avgPercentage >= 80) return 'Upper Intermediate';

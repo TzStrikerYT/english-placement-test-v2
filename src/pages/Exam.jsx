@@ -120,16 +120,33 @@ function Exam() {
       const studentInfo = location.state?.studentInfo || {};
       const surveyResults = location.state?.surveyResults || {};
       
-      // Submit with zero scores
+      // Get listening percentage from survey comprehension score
+      const listeningPercentage = surveyResults.answers?.comprehension ? parseFloat(((surveyResults.answers.comprehension / 5) * 100).toFixed(2)) : 0;
+      
+      // Calculate grammar percentage from teacher evaluation only (since exam is disqualified)
+      const teacherGrammarScore = surveyResults.answers?.grammar || 0;
+      const grammarPercentage = teacherGrammarScore > 0 ? parseFloat(((teacherGrammarScore / 5) * 100).toFixed(2)) : 0;
+      
+      // Submit with zero scores for exam-based skills, but keep survey-based scores
       const studentData = {
         ...studentInfo,
-        listeningPercentage: 0,
+        listeningPercentage: listeningPercentage,
         writingPercentage: 0,
-        grammarPercentage: 0,
-        speakingPercentage: 0,
+        grammarPercentage: grammarPercentage,
+        readingPercentage: 0,
+        speakingPercentage: surveyResults.average ? parseFloat(((surveyResults.average / 5) * 100).toFixed(2)) : 0,
         reachedLevel: 'Disqualified',
         surveyResults: surveyResults.answers || {},
-        examResults: { answers: [], percentages: { listeningPercentage: 0, writingPercentage: 0, grammarPercentage: 0 } },
+        examResults: { 
+          answers: [], 
+          questions: decodedQuestions,
+          percentages: { 
+            listeningPercentage: listeningPercentage, 
+            writingPercentage: 0, 
+            grammarPercentage: grammarPercentage, 
+            readingPercentage: 0 
+          } 
+        },
         finalSurveyResults: surveyResults,
         disqualified: true,
         disqualificationReason: 'Switched to another window/tab during exam'
@@ -142,7 +159,16 @@ function Exam() {
           finalResults: {
             studentInfo: studentInfo,
             surveyResults: surveyResults,
-            examResults: { answers: [], percentages: { listeningPercentage: 0, writingPercentage: 0, grammarPercentage: 0 } },
+            examResults: { 
+              answers: [], 
+              questions: decodedQuestions,
+              percentages: { 
+                listeningPercentage: listeningPercentage, 
+                writingPercentage: 0, 
+                grammarPercentage: grammarPercentage, 
+                readingPercentage: 0 
+              } 
+            },
             reachedLevel: 'Disqualified',
             disqualified: true
           }
@@ -178,8 +204,27 @@ function Exam() {
       console.log('Survey results:', surveyResults);
       console.log('Previous exam results:', examResults);
       
-      // Calculate percentages from exam results
-      const percentages = calculatePercentages({ answers });
+      // Calculate percentages from exam results (excluding listening which comes from survey)
+      const examPercentages = calculatePercentages({ 
+        answers, 
+        questions: decodedQuestions 
+      });
+      
+      // Calculate grammar percentage as weighted average: 75% exam + 25% teacher evaluation
+      const teacherGrammarScore = surveyResults.answers?.grammar || 0;
+      const teacherGrammarPercentage = teacherGrammarScore > 0 ? parseFloat(((teacherGrammarScore / 5) * 100).toFixed(2)) : 0;
+      const examGrammarPercentage = examPercentages.writingPercentage; // Use writing percentage as exam grammar score
+      const weightedGrammarPercentage = parseFloat(((examGrammarPercentage * 0.75) + (teacherGrammarPercentage * 0.25)).toFixed(2));
+      
+      // Use listening percentage from survey, other percentages from exam
+      const percentages = {
+        listeningPercentage: surveyResults.average ? parseFloat(((surveyResults.answers?.comprehension / 5) * 100).toFixed(2)) : 0,
+        writingPercentage: examPercentages.writingPercentage,
+        grammarPercentage: weightedGrammarPercentage,
+        readingPercentage: examPercentages.readingPercentage,
+        speakingPercentage: surveyResults.average ? parseFloat(((surveyResults.average / 5) * 100).toFixed(2)) : 0
+      };
+      
       const reachedLevel = calculateReachedLevel(percentages);
       
       // Prepare student data for Firebase - combine survey and exam results
@@ -188,7 +233,8 @@ function Exam() {
         listeningPercentage: percentages.listeningPercentage,
         writingPercentage: percentages.writingPercentage,
         grammarPercentage: percentages.grammarPercentage,
-        speakingPercentage: surveyResults.average ? (surveyResults.average / 5) * 100 : 0,
+        readingPercentage: percentages.readingPercentage,
+        speakingPercentage: percentages.speakingPercentage,
         reachedLevel: reachedLevel,
         surveyResults: surveyResults.answers || {},
         examResults: { answers, percentages },

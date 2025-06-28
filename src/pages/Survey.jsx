@@ -90,16 +90,22 @@ function Survey() {
       console.log('Exam results from location:', examResults);
       
       // Calculate speaking percentage from survey average
-      const speakingPercentage = (average / 5) * 100;
+      const speakingPercentage = parseFloat(((average / 5) * 100).toFixed(2));
       console.log('Calculated speaking percentage:', speakingPercentage);
+      
+      // Calculate listening percentage from comprehension score (question #5)
+      const comprehensionScore = surveyAnswers.comprehension;
+      const listeningPercentage = comprehensionScore > 0 ? parseFloat(((comprehensionScore / 5) * 100).toFixed(2)) : 0;
+      console.log('Calculated listening percentage from comprehension:', listeningPercentage);
       
       // Prepare student data for Firebase
       const studentData = {
         ...studentInfo,
         speakingPercentage: speakingPercentage,
-        listeningPercentage: examResults.listeningPercentage || 0,
+        listeningPercentage: listeningPercentage,
         writingPercentage: examResults.writingPercentage || 0,
         grammarPercentage: examResults.grammarPercentage || 0,
+        readingPercentage: examResults.readingPercentage || 0,
         reachedLevel: getLevelRecommendation(average),
         surveyResults: surveyAnswers,
         examResults: examResults
