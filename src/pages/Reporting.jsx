@@ -260,7 +260,7 @@ function Reporting() {
               <div class="certifica-title">CERTIFICA</div>
               
               <div class="student-info">
-                  Que el (la) estudiante(a) <strong>${student.studentName}</strong> con P.P.T. <strong>${student.documentNumber}</strong> de ${student.placeOfExpedition || student.city}, obtuvo en 
+                  Que el (la) estudiante <strong>${student.studentName}</strong> con ${student.documentType === 'Other' ? 'P.P.T.' : student.documentType} <strong>${student.documentNumber}</strong> de ${student.placeOfExpedition || student.city}, obtuvo en 
                   su <strong>EXAMEN DE CLASIFICACIÓN DE NIVEL DE INGLÉS</strong> las siguientes puntuaciones de suficiencia:
                   ${student.disqualified ? '<br><br><strong style="color: #c62828;">⚠️ ESTUDIANTE DESCALIFICADO: ' + (student.disqualificationReason || 'Violación del examen') + '</strong>' : ''}
               </div>
@@ -276,7 +276,7 @@ function Reporting() {
                   </tr>
                   <tr>
                       <td class="skill-header">READING</td>
-                      <td>${student.readingPercentage || 'N/A'}% - 100%</td>
+                      <td>${student.readingPercentage}% - 100%</td>
                   </tr>
                   <tr>
                       <td class="skill-header">WRITING</td>
