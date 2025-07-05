@@ -241,7 +241,8 @@ export const calculateReachedLevel = (percentages) => {
   ) / 5;
 
   // MCER levels with maximum of B1
-  if (avgPercentage >= 80) return 'B1';
+  if (avgPercentage >= 90) return 'B2';
+  if (avgPercentage >= 75) return 'B1';
   if (avgPercentage >= 60) return 'A2';
   return 'A1';
 }; 
