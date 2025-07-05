@@ -5,6 +5,7 @@ import Exam from './pages/Exam';
 import Report from './pages/Report';
 import Survey from './pages/Survey';
 import Reporting from './pages/Reporting';
+import ShowResult from './pages/ShowResult';
 import ProtectedRoute from './components/ProtectedRoute';
 import './App.css'
 
@@ -16,6 +17,7 @@ function App() {
         <Route path="/exam" element={<Exam />} />
         <Route path="/survey" element={<Survey />} />
         <Route path="/report" element={<Report />} />
+        <Route path="/show-result" element={<ShowResult />} />
         <Route path="/reporting" element={
           <ProtectedRoute>
             <Reporting />

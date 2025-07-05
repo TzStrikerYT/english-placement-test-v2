@@ -50,6 +50,7 @@ function Home() {
           {/* Logo will be placed here */}
         </div>
         <h1>English Language Level Placement Test</h1>
+        
         <form className="home-form">
           <input
             type="text"
@@ -85,13 +86,15 @@ function Home() {
             value={studentInfo.placeOfExpedition}
             onChange={handleChange}
           />
+          
           <div className="button-container">
             <button 
               type="button" 
               onClick={startExam}
               disabled={isChecking}
+              className="primary-button"
             >
-              {isChecking ? 'Verificando...' : 'Comenzar'}
+              {isChecking ? 'Verificando...' : 'Comenzar Examen'}
             </button>
           </div>
         </form>

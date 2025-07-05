@@ -26,7 +26,7 @@ function Exam() {
       let decodedString;
       try {
         decodedString = decodeURIComponent(escape(atob(cleanBase64)));
-      } catch (utf8Error) {
+      } catch {
         // Method 2: If that fails, try direct atob and handle encoding manually
         const binaryString = atob(cleanBase64);
         const bytes = new Uint8Array(binaryString.length);
@@ -204,24 +204,11 @@ function Exam() {
 
       await saveStudentData(studentData);
       
-      navigate('/', { 
+      console.log('Exam completed and final data saved:', studentData);
+      
+      navigate('/show-result', { 
         state: { 
-          finalResults: {
-            studentInfo: studentInfo,
-            surveyResults: surveyResults,
-            examResults: { 
-              answers: [], 
-              questions: decodedQuestions,
-              percentages: { 
-                listeningPercentage: listeningPercentage, 
-                writingPercentage: 0, 
-                grammarPercentage: grammarPercentage, 
-                readingPercentage: 0 
-              } 
-            },
-            reachedLevel: reachedLevel,
-            disqualified: true
-          }
+          studentData: studentData
         } 
       });
     } catch (error) {
@@ -287,7 +274,11 @@ function Exam() {
         speakingPercentage: percentages.speakingPercentage,
         reachedLevel: reachedLevel,
         surveyResults: surveyResults.answers || {},
-        examResults: { answers, percentages },
+        examResults: { 
+          answers, 
+          questions: decodedQuestions,
+          percentages 
+        },
         finalSurveyResults: surveyResults
       };
 
@@ -298,15 +289,9 @@ function Exam() {
       
       console.log('Exam completed and final data saved:', studentData);
       
-      // Navigate back to home
-      navigate('/', { 
+      navigate('/show-result', { 
         state: { 
-          finalResults: {
-            studentInfo: studentInfo,
-            surveyResults: surveyResults,
-            examResults: { answers, percentages },
-            reachedLevel: reachedLevel
-          }
+          studentData: studentData
         } 
       });
     } catch (error) {

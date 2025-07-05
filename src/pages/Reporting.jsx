@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { getAllStudents, getStudentData } from '../services/firebaseService';
 import html2pdf from 'html2pdf.js';
 import './Reporting.css';
 
 function Reporting() {
+  const navigate = useNavigate();
   const [students, setStudents] = useState([]);
   const [loading, setLoading] = useState(true);
   const [selectedStudent, setSelectedStudent] = useState(null);
@@ -73,6 +75,19 @@ function Reporting() {
     } finally {
       setLoading(false);
     }
+  };
+
+  const viewResults = (student) => {
+    if (!student) {
+      alert('Please select a student first');
+      return;
+    }
+    
+    navigate('/show-result', { 
+      state: { 
+        studentData: student
+      } 
+    });
   };
 
   const generateCertificate = (student) => {
@@ -490,12 +505,20 @@ function Reporting() {
                   </div>
                 </div>
               </div>
-              <button 
-                onClick={() => generateCertificate(selectedStudent)}
-                className="generate-certificate-button"
-              >
-                Generate Certificate
-              </button>
+              <div className="button-container">
+                <button 
+                  onClick={() => generateCertificate(selectedStudent)}
+                  className="generate-certificate-button"
+                >
+                  Generate Certificate
+                </button>
+                <button 
+                  onClick={() => viewResults(selectedStudent)}
+                  className="view-results-button"
+                >
+                  View Results
+                </button>
+              </div>
             </div>
           )}
         </div>

@@ -275,11 +275,42 @@
   transition: all 0.3s ease;
   margin-top: 20px;
   font-weight: 600;
+  margin-right: 15px;
 }
 
 .generate-certificate-button:hover {
   transform: translateY(-2px);
   box-shadow: 0 8px 16px rgba(231, 76, 60, 0.3);
+}
+
+.view-results-button {
+  padding: 15px 30px;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 18px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  margin-top: 20px;
+  font-weight: 600;
+}
+
+.view-results-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 16px rgba(102, 126, 234, 0.3);
+}
+
+.selected-student .button-container {
+  display: flex;
+  gap: 15px;
+  flex-wrap: wrap;
+  margin-top: 20px;
+}
+
+.selected-student .button-container button {
+  margin-top: 0;
+  margin-right: 0;
 }
 
 .all-students-section {
@@ -350,5 +381,13 @@
   
   .students-grid {
     grid-template-columns: 1fr;
+  }
+  
+  .selected-student .button-container {
+    flex-direction: column;
+  }
+  
+  .selected-student .button-container button {
+    width: 100%;
   }
 } 

@@ -78,12 +78,15 @@
   cursor: pointer;
   transition: all 0.3s ease;
   font-weight: 600;
-  background: #2563eb;
-  color: white;
   min-width: 200px;
 }
 
-.button-container button:hover {
+.primary-button {
+  background: #2563eb;
+  color: white;
+}
+
+.primary-button:hover {
   transform: translateY(-2px);
   box-shadow: 0 8px 16px rgba(37, 99, 235, 0.3);
   background: #1d4ed8;
@@ -91,6 +94,13 @@
 
 .button-container button:active {
   transform: translateY(1px);
+}
+
+.button-container button:disabled {
+  background: #9ca3af;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
 }
 
 /* Responsive design for mobile */

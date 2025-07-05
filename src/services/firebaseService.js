@@ -68,6 +68,12 @@ export const saveStudentData = async (studentData) => {
       speakingPercentage: studentData.speakingPercentage || 0,
       readingPercentage: studentData.readingPercentage || 0,
       reachedLevel: studentData.reachedLevel || 'Not evaluated',
+      // Store exam questions and answers for results display
+      examQuestions: studentData.examResults?.questions || [],
+      examAnswers: studentData.examResults?.answers || [],
+      surveyResults: studentData.surveyResults || {},
+      finalSurveyResults: studentData.finalSurveyResults || {},
+      disqualified: studentData.disqualified || false,
       createdAt: new Date(),
       updatedAt: new Date()
     };
